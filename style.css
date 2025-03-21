@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(180deg, #1A1B3E 0%, #2C2F6F 50%, #454AA6 100%);
+    font-family: 'Press Start 2P', cursive;
+    overflow: hidden;
+    transition: all 1s ease;
+}
+
+body.day-theme {
+    background: linear-gradient(180deg, #87CEEB 0%, #90EE90 100%);
+}
+
+.game-container {
+    width: 800px;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(123, 151, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 1s ease;
+}
+
+.game-container.day-theme {
+    box-shadow: 0 0 50px rgba(135, 206, 235, 0.3);
+}
+
+.dino {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30,80 C10,80 0,60 10,40 C20,20 40,20 50,30 C60,20 80,20 90,40 C100,60 90,80 70,80 Z" fill="%23FFB6E1"/><path d="M20,50 L40,40 L40,60 Z M60,40 L80,50 L60,60 Z" fill="%23FFF3F9"/><path d="M45,60 C45,65 55,65 55,60" stroke="%23FF69B4" stroke-width="3" fill="none"/><circle cx="35" cy="50" r="4" fill="%23333"/><circle cx="65" cy="50" r="4" fill="%23333"/><path d="M10,40 L30,20 M70,20 L90,40" stroke="%23FFB6E1" stroke-width="4"/><path d="M40,10 L50,0 L60,10" fill="%23FFB6E1"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform-origin: center;
+    z-index: 1;
+    filter: drop-shadow(0 0 10px rgba(255, 182, 225, 0.5));
+}
+
+.ground {
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(180deg, #454AA6 0%, #353987 100%);
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    background-image: 
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+    background-size: 30px 30px;
+    transition: all 1s ease;
+}
+
+.day-theme .ground {
+    background: linear-gradient(180deg, #90EE90 0%, #32CD32 100%);
+    border-top: 2px solid rgba(255, 255, 255, 0.4);
+    background-image: 
+        radial-gradient(circle at 50% 0%, #32CD32 2px, transparent 2px),
+        radial-gradient(circle at 30% 10%, #228B22 3px, transparent 3px),
+        radial-gradient(circle at 70% 5%, #228B22 2px, transparent 2px),
+        radial-gradient(circle at 90% 10%, #32CD32 3px, transparent 3px),
+        radial-gradient(circle at 10% 5%, #32CD32 2px, transparent 2px);
+    background-size: 100px 30px;
+    animation: grassWave 3s infinite alternate;
+}
+
+@keyframes grassWave {
+    from { background-position: 0 0; }
+    to { background-position: 50px 0; }
+}
+
+.cactus {
+    width: 40px;
+    height: 35px;
+    position: absolute;
+    bottom: 35px;
+    right: -40px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="g1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"><stop offset="0%" style="stop-color:%23FFB6E1"/><stop offset="100%" style="stop-color:%23FF69B4"/></radialGradient></defs><path d="M50,10 L90,50 L50,90 L10,50 Z" fill="url(%23g1)"/><circle cx="50" cy="50" r="10" fill="%23FFF" fill-opacity="0.8"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 10px rgba(255, 182, 225, 0.5));
+    animation: sparkle 2s infinite;
+}
+
+.cloud {
+    position: absolute;
+    width: 100px;
+    height: 60px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60"><path d="M10,45 C0,45 0,35 10,35 C10,20 25,20 30,25 C30,15 40,15 45,20 C50,10 65,10 70,20 C75,15 85,15 85,25 C90,20 100,20 100,35 C110,35 110,45 100,45 Z" fill="%237B97FF" fill-opacity="0.3"/><path d="M15,42 C5,42 5,32 15,32 C15,17 30,17 35,22 C35,12 45,12 50,17 C55,7 70,7 75,17 C80,12 90,12 90,22 C95,17 105,17 105,32 C115,32 115,42 105,42 Z" fill="%23A5B4FF" fill-opacity="0.2"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    animation: floatCloud linear infinite;
+    opacity: 0.6;
+    transition: all 1s ease;
+}
+
+.day-theme .cloud {
+    opacity: 0.9;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60"><path d="M10,45 C0,45 0,35 10,35 C10,20 25,20 30,25 C30,15 40,15 45,20 C50,10 65,10 70,20 C75,15 85,15 85,25 C90,20 100,20 100,35 C110,35 110,45 100,45 Z" fill="%23FFFFFF"/><path d="M15,42 C5,42 5,32 15,32 C15,17 30,17 35,22 C35,12 45,12 50,17 C55,7 70,7 75,17 C80,12 90,12 90,22 C95,17 105,17 105,32 C115,32 115,42 105,42 Z" fill="%23F0F8FF"/></svg>');
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
+}
+
+/* Rest of the animations and effects */
+@keyframes sparkle {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 182, 225, 0.5)); }
+    50% { filter: drop-shadow(0 0 20px rgba(255, 182, 225, 0.8)); }
+}
+
+@keyframes floatCloud {
+    from { left: 100%; }
+    to { left: -100px; }
+}
+
+.jumping {
+    animation: jump 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes jump {
+    0% { 
+        bottom: 0;
+        transform: scale(1) rotate(0deg);
+    }
+    40% { 
+        bottom: 160px;
+        transform: scale(1.1) rotate(-10deg);
+    }
+    60% {
+        bottom: 160px;
+        transform: scale(1.1) rotate(10deg);
+    }
+    80% {
+        bottom: 80px;
+        transform: scale(1.05) rotate(5deg);
+    }
+    100% { 
+        bottom: 0;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+#score {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 20px;
+    color: #FFB6E1;
+    text-shadow: 0 0 10px rgba(255, 182, 225, 0.5);
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    transition: all 1s ease;
+}
+
+.day-theme #score {
+    color: #228B22;
+    text-shadow: 0 0 10px rgba(34, 139, 34, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#game-over {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    text-align: center;
+    background: rgba(26, 27, 62, 0.9);
+    padding: 30px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 182, 225, 0.3);
+    color: #FFB6E1;
+    text-shadow: 0 0 10px rgba(255, 182, 225, 0.5);
+    box-shadow: 0 0 30px rgba(123, 151, 255, 0.3);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: all 1s ease;
+}
+
+.day-theme #game-over {
+    background: rgba(144, 238, 144, 0.9);
+    border: 2px solid rgba(34, 139, 34, 0.3);
+    color: #228B22;
+    text-shadow: 0 0 10px rgba(34, 139, 34, 0.5);
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform: translate(-52%, -48%) rotate(-5deg); }
+    75% { transform: translate(-48%, -52%) rotate(5deg); }
+}
+
+#game-over:not(.hidden) {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Star background */
+.game-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+        radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.3) 1px, transparent 1px),
+        radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.3) 1px, transparent 1px);
+    background-size: 150px 150px;
+    animation: twinkle 2s infinite alternate;
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+.day-theme::before {
+    opacity: 0;
+}
+
+/* Sun for day theme */
+.day-theme::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at center, #FFD700, #FFA500);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #FFD700;
+    animation: shine 3s infinite alternate;
+}
+
+@keyframes shine {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
