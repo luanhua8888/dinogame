@@ -68,16 +68,9 @@ body.day-theme {
     background-image: 
         radial-gradient(circle at 50% 0%, #32CD32 2px, transparent 2px),
         radial-gradient(circle at 30% 10%, #228B22 3px, transparent 3px),
-        radial-gradient(circle at 70% 5%, #228B22 2px, transparent 2px),
-        radial-gradient(circle at 90% 10%, #32CD32 3px, transparent 3px),
-        radial-gradient(circle at 10% 5%, #32CD32 2px, transparent 2px);
+        radial-gradient(circle at 70% 5%, #228B22 2px, transparent 2px);
     background-size: 100px 30px;
     animation: grassWave 3s infinite alternate;
-}
-
-@keyframes grassWave {
-    from { background-position: 0 0; }
-    to { background-position: 50px 0; }
 }
 
 .cactus {
@@ -108,10 +101,8 @@ body.day-theme {
 .day-theme .cloud {
     opacity: 0.9;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60"><path d="M10,45 C0,45 0,35 10,35 C10,20 25,20 30,25 C30,15 40,15 45,20 C50,10 65,10 70,20 C75,15 85,15 85,25 C90,20 100,20 100,35 C110,35 110,45 100,45 Z" fill="%23FFFFFF"/><path d="M15,42 C5,42 5,32 15,32 C15,17 30,17 35,22 C35,12 45,12 50,17 C55,7 70,7 75,17 C80,12 90,12 90,22 C95,17 105,17 105,32 C115,32 115,42 105,42 Z" fill="%23F0F8FF"/></svg>');
-    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
 }
 
-/* Rest of the animations and effects */
 @keyframes sparkle {
     0%, 100% { filter: drop-shadow(0 0 10px rgba(255, 182, 225, 0.5)); }
     50% { filter: drop-shadow(0 0 20px rgba(255, 182, 225, 0.8)); }
@@ -162,13 +153,6 @@ body.day-theme {
     border: 2px solid rgba(255, 255, 255, 0.2);
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
-    transition: all 1s ease;
-}
-
-.day-theme #score {
-    color: #228B22;
-    text-shadow: 0 0 10px rgba(34, 139, 34, 0.5);
-    background: rgba(255, 255, 255, 0.2);
 }
 
 #game-over {
@@ -187,14 +171,6 @@ body.day-theme {
     box-shadow: 0 0 30px rgba(123, 151, 255, 0.3);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    transition: all 1s ease;
-}
-
-.day-theme #game-over {
-    background: rgba(144, 238, 144, 0.9);
-    border: 2px solid rgba(34, 139, 34, 0.3);
-    color: #228B22;
-    text-shadow: 0 0 10px rgba(34, 139, 34, 0.5);
 }
 
 .hidden {
@@ -256,4 +232,11 @@ body.day-theme {
 @keyframes twinkle {
     0% { opacity: 0.5; }
     100% { opacity: 1; }
+}
+
+/* Simple responsive design */
+@media (max-width: 840px) {
+    .game-container {
+        width: 95vw;
+    }
 }

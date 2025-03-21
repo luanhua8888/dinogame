@@ -95,7 +95,7 @@ function updateLevel() {
     const newLevel = Math.floor(score / 10) + 1;
     if (newLevel !== level) {
         level = newLevel;
-        updateTheme();  // Update theme when level changes
+        updateTheme();
         
         const levelUpSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1NOTQrHxERAQMFDRIwR1dleH6BgoFvW0EqHhAJBAUJEipCW3KCjZSbloBpTjAmFg0FBAcQLFJ2i5ywubisnXhXKxsNBQUJGEBwkrfX3OCvh2NKMyEVDQoMFzlwqNPy//LPpX1iSzYnGxITGzRkm9P2/+zPq4ZxaFJIQkJIV3SawOb69/DWtJ6OhHp1fpGvxs3U2t7g49/b19PQzc7T2'
         );
@@ -169,7 +169,7 @@ function resetGame() {
         score = 0;
         level = 1;
         gameSpeed = 4;
-        updateTheme();  // Reset theme
+        updateTheme();
         scoreDisplay.textContent = 'LEVEL 1 - SCORE: 0';
         gameOverDisplay.classList.add('hidden');
         obstacles.forEach(obstacle => obstacle.remove());
