@@ -12,6 +12,20 @@ let obstacles = [];
 let clouds = [];
 let jumpBuffer = false;
 let level = 1;
+function updateTheme() {
+    // Remove all theme classes first
+    document.body.classList.remove('theme-1', 'theme-2', 'theme-3', 'theme-4');
+    gameContainer.classList.remove('theme-1', 'theme-2', 'theme-3', 'theme-4');
+
+    // Add new theme class based on level
+    if (level >= 2) {
+        const themeNumber = Math.min(4, Math.floor((level - 2) / 2) + 1);
+        const themeClass = `theme-${themeNumber}`;
+        document.body.classList.add(themeClass);
+        gameContainer.classList.add(themeClass);
+    }
+}
+
 
 function createCloud() {
     const cloud = document.createElement('div');
@@ -52,32 +66,43 @@ function jump() {
     }
 }
 
-function createObstacle(offset = 0) {
+function createObstacle(offset = 0, isFlying = false) {
     if (isGameOver) return;
     
     const obstacle = document.createElement('div');
-    obstacle.classList.add('cactus');
+    obstacle.classList.add(isFlying ? 'bird' : 'cactus');
     gameContainer.appendChild(obstacle);
     
     let obstaclePosition = gameContainer.offsetWidth + offset;
     obstacle.style.left = obstaclePosition + 'px';
+    
+    // For flying obstacles, position them higher
+    if (isFlying) {
+        obstacle.style.bottom = `${Math.random() * 20 + 50}px`; // Random height between 50-70px
+    }
     
     obstacles.push(obstacle);
 }
 
 function createObstacleGroup() {
     if (level < 3) {
-        // Level 1-2: Only single obstacles
-        createObstacle();
+        // Level 1-2: Single ground obstacles and occasional flying ones
+        if (Math.random() > 0.7) {
+            createObstacle(0, true); // Flying obstacle
+        } else {
+            createObstacle(0, false); // Ground obstacle
+        }
     } else {
-        // Level 3+: Can have groups of 2 obstacles
+        // Level 3+: Can have mixed groups of obstacles
         if (Math.random() > 0.7) {
             const numObstacles = 2;
             for (let i = 0; i < numObstacles; i++) {
-                createObstacle(i * 100);
+                const isFlying = Math.random() > 0.5;
+                createObstacle(i * 100, isFlying);
             }
         } else {
-            createObstacle();
+            const isFlying = Math.random() > 0.6;
+            createObstacle(0, isFlying);
         }
     }
 }
@@ -86,6 +111,7 @@ function updateLevel() {
     const newLevel = Math.floor(score / 3) + 1; // Even faster level progression
     if (newLevel !== level) {
         level = newLevel;
+        updateTheme();
         
         const levelUpSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1NOTQrHxERAQMFDRIwR1dleH6BgoFvW0EqHhAJBAUJEipCW3KCjZSbloBpTjAmFg0FBAcQLFJ2i5ywubisnXhXKxsNBQUJGEBwkrfX3OCvh2NKMyEVDQoMFzlwqNPy//LPpX1iSzYnGxITGzRkm9P2/+zPq4ZxaFJIQkJIV3SawOb69/DWtJ6OhHp1fpGvxs3U2t7g49/b19PQzc7T2'
         );
@@ -160,6 +186,7 @@ function resetGame() {
         score = 0;
         level = 1;
         gameSpeed = 6;
+        updateTheme();
         scoreDisplay.textContent = `LEVEL 1 - SCORE: 0 - HIGH SCORE: ${highScore}`;
         gameOverDisplay.classList.add('hidden');
         obstacles.forEach(obstacle => obstacle.remove());
