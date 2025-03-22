@@ -6,21 +6,12 @@ const gameOverDisplay = document.getElementById('game-over');
 let isJumping = false;
 let isGameOver = false;
 let score = 0;
-let gameSpeed = 4;
+let highScore = 0;
+let gameSpeed = 6; // Increased initial speed
 let obstacles = [];
 let clouds = [];
 let jumpBuffer = false;
 let level = 1;
-
-function updateTheme() {
-    if (level >= 4) {
-        document.body.classList.add('day-theme');
-        gameContainer.classList.add('day-theme');
-    } else {
-        document.body.classList.remove('day-theme');
-        gameContainer.classList.remove('day-theme');
-    }
-}
 
 function createCloud() {
     const cloud = document.createElement('div');
@@ -92,10 +83,9 @@ function createObstacleGroup() {
 }
 
 function updateLevel() {
-    const newLevel = Math.floor(score / 10) + 1;
+    const newLevel = Math.floor(score / 3) + 1; // Even faster level progression
     if (newLevel !== level) {
         level = newLevel;
-        updateTheme();
         
         const levelUpSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1NOTQrHxERAQMFDRIwR1dleH6BgoFvW0EqHhAJBAUJEipCW3KCjZSbloBpTjAmFg0FBAcQLFJ2i5ywubisnXhXKxsNBQUJGEBwkrfX3OCvh2NKMyEVDQoMFzlwqNPy//LPpX1iSzYnGxITGzRkm9P2/+zPq4ZxaFJIQkJIV3SawOb69/DWtJ6OhHp1fpGvxs3U2t7g49/b19PQzc7T2'
         );
@@ -113,9 +103,10 @@ function moveObstacles() {
             obstacles.splice(index, 1);
             score++;
             updateLevel();
-            scoreDisplay.textContent = `LEVEL ${level} - SCORE: ${score}`;
+            highScore = Math.max(highScore, score);
+            scoreDisplay.textContent = `LEVEL ${level} - SCORE: ${score} - HIGH SCORE: ${highScore}`;
             
-            gameSpeed = Math.min(15, 4 + level * 0.8);
+            gameSpeed = Math.min(20, 6 + level * 1.5); // More aggressive speed scaling and higher max speed
             
             const scoreSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1NOTQrHxERAQMFDRIwR1dleH6BgoFvW0EqHhAJBAUJEipCW3KCjZSbloBpTjAmFg0FBAcQLFJ2i5ywubisnXhXKxsNBQUJGEBwkrfX3OCvh2NKMyEVDQoMFzlwqNPy//LPpX1iSzYnGxITGzRkm9P2/+zPq4ZxaFJIQkJIV3SawOb69/DWtJ6OhHp1fpGvxs3U2t7g49/b19PQzc7T2'
             );
@@ -168,9 +159,8 @@ function resetGame() {
         isGameOver = false;
         score = 0;
         level = 1;
-        gameSpeed = 4;
-        updateTheme();
-        scoreDisplay.textContent = 'LEVEL 1 - SCORE: 0';
+        gameSpeed = 6;
+        scoreDisplay.textContent = `LEVEL 1 - SCORE: 0 - HIGH SCORE: ${highScore}`;
         gameOverDisplay.classList.add('hidden');
         obstacles.forEach(obstacle => obstacle.remove());
         obstacles = [];
@@ -194,14 +184,18 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-document.addEventListener('touchstart', (event) => {
+// Add click and touch event listeners for jumping
+document.addEventListener('click', handleInteraction);
+document.addEventListener('touchstart', handleInteraction);
+
+function handleInteraction(event) {
     if (isGameOver) {
         resetGame();
     } else {
         jump();
     }
     event.preventDefault();
-});
+}
 
 setInterval(() => {
     if (!isGameOver && Math.random() > 0.7) {
@@ -213,7 +207,7 @@ setInterval(() => {
     if (!isGameOver) {
         createObstacleGroup();
     }
-}, 2500 - level * 100);
+}, 1800 - level * 200); // More aggressive spawn rate scaling with levels
 
 function gameLoop() {
     if (!isGameOver) {
